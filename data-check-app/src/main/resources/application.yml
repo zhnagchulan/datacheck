@@ -1,0 +1,35 @@
+mybatis:
+   config-location: classpath:/mybatis/mybatis-config.xml
+   mapper-locations: classpath:/mybatis/mapper/*.xml
+   type-aliases-package: com.chinalife.datacheck.models
+server:
+  port: 8888
+spring:
+  datasource:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://10.21.34.192:10000/data-check?useUnicode=true&useSSL=false&characterEncoding=UTF-8&allowMultiQueries=true
+      username: datacheck
+      password: datacheck123
+      type: com.alibaba.druid.pool.DruidDataSource
+  devtools:
+    restart:
+      enabled: true
+  http:
+    encoding:
+      charset: UTF-8
+     
+logging:
+  level:
+    com:
+      chinalife: 
+        datacheck:
+          dao: debug
+  config: classpath:logback-boot.xml
+  
+ 
+  
+
+
+     
+
+   

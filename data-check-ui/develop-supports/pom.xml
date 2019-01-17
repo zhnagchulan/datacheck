@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.newcore.develop.supports</groupId>
+    <artifactId>develop-supports</artifactId>
+    <version>3.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>${project.artifactId}</name>
+    <description>开发者使用工具扩展组件</description>
+
+    <modules>
+        <module>dev-tool</module>
+    </modules>
+
+    <properties>
+        <!-- 主版本号 -->
+        <master_version>3.0.0-SNAPSHOT</master_version>
+        <!-- 统一字符集 -->
+        <encoding_type>UTF-8</encoding_type>
+        <!-- 所有工程中,对依赖的根组件(root jar)的版本维护 -->
+        <java_version>1.8</java_version>
+        <halo_version>coldnoodle.2.2.0-SNAPSHOT</halo_version>
+        <spring_version>4.3.3.RELEASE</spring_version>
+        <oracle_driver_version>11.2.0.4.0</oracle_driver_version>
+        <servlet_version>3.1.0</servlet_version>
+        <freemarker_version>2.3.23</freemarker_version>
+        <junit_version>4.12</junit_version>
+        <mockito_version>2.1.0-RC.1</mockito_version>
+        <zookeeper_version>3.4.9</zookeeper_version>
+        <flyway_version>4.0.3</flyway_version>
+        <curator_framework_version>2.11.1</curator_framework_version>
+        <core_support_version>3.0.0-SNAPSHOT</core_support_version>
+        <business_support_version>3.0.0-SNAPSHOT</business_support_version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit_version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring_version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito_version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.7</version>
+                <configuration>
+                    <encoding>${encoding_type}</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
+                <configuration>
+                    <source>${java_version}</source>
+                    <target>${java_version}</target>
+                    <encoding>${encoding_type}</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <distributionManagement>
+        <repository>
+            <id>releases</id>
+            <url>http://10.31.58.211:8081/content/repositories/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <url>http://10.31.58.211:8081/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+    <repositories>
+        <repository>
+            <id>newcore</id>
+            <name>newcore</name>
+            <url>http://10.31.58.211:8081/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+</project>

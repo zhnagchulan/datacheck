@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinalife.datacheck.dao.DataCheckDao">
+
+    <select id="query" resultType="DataCheck">
+        SELECT
+            u.id   id,
+            u.username name,
+            u.nickname nickName
+        FROM
+            sys_user u
+        WHERE u.username = #{username}
+              
+    </select>
+    <select id="get" resultType="OrbpsLandQueue">
+        SELECT
+            tq.task_seq task_seq,
+            tq.status status,
+            tq.appl_no appl_no,
+            tq.lst_proc_type lst_proc_type,
+            tq.is_multi_pay is_multi_pay,
+            tq.is_step_plnmio is_step_plnmio,
+            tq.pln_land_flag pln_land_flag,
+            tq.fin_land_flag fin_land_flag,
+            tq.ipsn_land_flag ipsn_land_flag,
+            tq.insur_appl_land_flag insur_appl_land_flag,
+            tq.remark remark
+        FROM
+            task_cntr_data_landing_queue tq
+        WHERE (tq.status != "C"
+        	OR tq.fin_land_flag != 3
+        	OR tq.ipsn_land_flag != 3
+        	OR tq.insur_appl_land_flag != 3
+        	OR (tq.is_step_plnmio = "Y" AND tq.pln_land_flag != 3))
+        	<if test="appl_no != null">
+              AND tq.appl_no = #{appl_no}
+            </if>        
+    </select>
+	<insert id="add"  useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO datasource
+        (code, db_info, username, password,db_type,owner,create_time,update_time,delete_status) VALUES
+            (#{code}, #{dbInfo}, #{username}, #{password},#{dbType},#{owner},current_timestamp,current_timestamp,'1')
+	</insert>
+	<update id="delete">
+		UPDATE datasource
+        SET
+        delete_status = '2',update_time=current_timestamp 
+        WHERE code=#{code}
+	</update>
+	<update id="update">
+		UPDATE datasource
+        SET
+        username = #{username},  password=#{password},db_type=#{dbType},update_time=current_timestamp
+        WHERE code=#{code} and owner=#{owner}
+	</update>
+</mapper>

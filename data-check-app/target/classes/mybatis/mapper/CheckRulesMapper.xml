@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+ <mapper namespace="com.chinalife.datacheck.dao.CheckRuleDao">
+ <!-- 插入校验规则到tb_checkRules -->
+   <insert id="checkRule_add" >
+   insert into tb_checkRules(checkRule_code,user_id,app_id,datasource_code,intervals,create_time,
+   frequency,sql_statement,intent,is_message,is_enable,first_time) 
+   values(#{checkRule_code},#{user_id},#{app_id},#{datasource_code},#{intervals},#{create_time},
+   #{frequency},#{sql_statement},#{intent},#{is_message},#{is_enable},#{first_time})
+   </insert>
+   
+  <!--根据当前用户删除校验规则  -->
+   <delete id="checkRule_delete" >
+   delete from tb_checkRules where <if test="user_id!=null">user_id=#{user_id} and</if> checkRule_code=#{checkRule_code}
+   </delete>
+   <!-- 更新校验规则 -->
+   <update id="checkRule_update">
+   <!-- String checkRule_code, String user_id,String app_id,int intervals,Timestamp create_time,
+			 int frequency,String sql_statement,String intent,char is_message,char is_enable,String first_time -->
+     update tb_checkRules
+     <set>
+       
+       <if test="create_time!=null">create_time=#{create_time},</if>
+       <if test="intervals !=null">intervals=#{intervals},</if>
+       <if test="frequency !=null" >frequency=#{frequency},</if>
+       <if test="sql_statement !=null">sql_statement=#{sql_statement},</if>
+       <if test="intent !=null">intent=#{intent},</if>
+       <if test="is_message!=null">is_message=#{is_message},</if>
+       <if test="is_enable !=null">is_enable=#{is_enable},</if>
+       <if test="first_time !=null">first_time=#{first_time},</if>
+       <if test="update_time !=null">update_time=#{update_time}</if>
+     </set>
+     where <if test="user_id!=null">user_id=#{user_id} and </if>checkRule_code=#{checkRule_code}
+   </update>
+  
+  
+   <!-- 通过当前用户给定的校验规则代码查询校验规则信息 -->
+   <select id="queryBycheckRule_code" resultType="CheckRule">
+    select 
+    checkRule_code,
+    user_id ,
+  	app_id ,
+  	datasource_code,
+    intervals  intervals,
+    create_time,
+	frequency ,
+	sql_statement ,
+	intent ,
+	is_message,
+	is_enable ,
+	first_time,
+	update_time 
+	from tb_checkRules	 
+	where checkRule_code=#{checkRule_code} 
+	<if test="user_id !=null">and user_id=#{user_id}</if>
+   </select>
+   
+   
+   
+   <!-- 通过系统名称查系统id -->
+   <select id="querySystemId" resultType="Integer">
+    select id from system_app where app_name=#{sys_name}
+   </select>
+  
+  <!-- 通过系统id查系统名称 -->
+  <select id="querySystemName" resultType="String">
+    select app_name from system_app where id=#{app_id}
+  </select>
+  
+  
+   <!-- 查询所有的系统返回给前台系统选择下拉框 -->
+  <select id="querySystems" resultType="String">
+   select distinct app_name from user_app,system_app where user_app.app_id=system_app.id and
+   user_id=#{user_id}
+  </select>
+  
+  <!--查询前台界面所选系统的数据源  -->
+  <select id="queryDatasourceBySys" resultType="String" >
+   select code from datasource where app_id=#{app_id} and delete_flag='1'
+  </select>
+   <!--查询所有的关系人供前台选择  -->
+   <select id="queryAllStakeholders" resultType="String">
+   select workerName from tb_stakeholders_management
+   </select>
+   
+   <!--通过系统名称查询所有该系统的校验规则-->
+   <select id="queryBySysName" resultType="CheckRule">
+    select 
+    checkRule_code,
+    user_id ,
+  	app_id ,
+  	datasource_code,
+    intervals ,
+    create_time ,
+	frequency ,
+	sql_statement ,
+	intent ,
+	is_message,
+	is_enable ,
+	first_time,
+	update_time 
+	from tb_checkRules	 
+	where <if test="user_id !=null">user_id=#{user_id} and</if> 
+app_id in(select id from system_app where app_name=#{sys_name})
+limit #{begin},#{end}
+ </select>
+ 
+ <!-- 通过系统名称查询系统简称 -->
+ <select id="queryappSnameByName" resultType="String">
+ select app_sname from system_app where app_name=#{app_name}
+ </select>
+ 
+<select id="queryDatasource" resultType="HashMap">
+    select id,dbInfo,username,password,dbType,sid,port
+     from datasource where  code=#{datasource_code}
+     </select>
+     <!--查询总的 校验规则条数 -->
+     <select id="total" resultType="String">
+    select count(*) from tb_checkRules where user_id=#{user_id} and app_id=#{app_id}
+     </select>
+ <select id="totalByuser_id" resultType="String">
+    select count(*) from tb_checkRules where user_id=#{user_id}
+     </select>
+
+<!--实现前台校验规则分页功能-->
+ <select id="querySome" resultType="CheckRule">
+    select 
+    checkRule_code,
+    user_id ,
+  	app_id ,
+  	datasource_code,
+    intervals ,
+    create_time ,
+	frequency ,
+	sql_statement ,
+	intent ,
+	is_message,
+	is_enable ,
+	first_time,
+	update_time 
+	from tb_checkRules	 
+	where user_id=#{user_id} limit #{begin},#{end}
+ </select>
+ <!--批量停用-->
+ <update id="batchdisable" >
+ update tb_checkRules set is_enable='2' where checkRule_code in(${checkRules})
+ </update>
+ <!--将校验规则的状态改为有效-->
+ <update id="enable">
+   update tb_checkRules set is_enable='1' where checkRule_code=#{checkRule_code}
+ </update>
+ <!--在每次执行校验规则语句前检查应用系统是否停用，数据源是否停用，只要一个停用定时任务不执行-->
+ <select id="checkStatusBeforeExc" resultType="HashMap">
+   select a.status,b.delete_flag from system_app as a,datasource as b
+   where a.id=#{app_id} and b.code=#{datasource_code}
+ </select>
+ <!--宕机重启检查哪些校验规则还需继续执行，将还需执行的校验规则从"断点"恢复继续执行-->
+ <select id="checkJobstatus" resultType="HashMap">
+  select checkRule_code,user_id from tb_checkRules where is_enable='1'
+ </select>
+ <!--将校验规则的状态改为无效-->
+ <update id="stopJob" >
+  update  tb_checkRules set is_enable='2' where checkRule_code=#{checkRule_code} and user_id=#{user_id}
+ </update>
+ <!--查询某条校验规则要发送通知的关系人的姓名，供前台显示哪些关系人已经被选-->
+ <select id="querystakeholdersOfcheckRule" resultType="String">
+  select a.workerName from tb_stakeholders_management a ,tb_stakeholder_to_checkRule b
+  where a.workNumber=b.workNumber and b.checkRule_code=#{checkRule_code}
+ </select>
+ </mapper>

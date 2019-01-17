@@ -1,0 +1,40 @@
+# 创建系统节点
+create /example
+
+# 创建系统的数据库节点
+create /example/db
+create /example/db/version
+create /example/db/version/global 1.1.0-SNAPSHOT
+
+# 创建系统的serviceapp工程节点
+create /example/serviceapp
+# 创建serviceapp的配置中心节点
+create /example/serviceapp/config
+# 创建系统的serviceapp工版本程节点
+create /example/serviceapp/version
+# 创建serviceapp的版本节点
+create /example/serviceapp/version/global 1.1.0-SNAPSHOT
+# 创建serviceapp的心跳配置节点
+create /example/serviceapp/heartbeat
+
+# 创建系统的webapp工程节点
+create /example/webapp
+# 创建webapp的配置中心节点
+create /example/webapp/config
+# 创建系统的webapp工程版本节点
+create /example/webapp/version
+# 创建webapp的版本节点
+create /example/webapp/version/global 1.1.0-SNAPSHOT
+# 创建webapp的心跳配置节点
+create /example/webapp/heartbeat
+
+# 创建系统的batchapp工程节点
+create /example/batchapp
+# 创建batchapp的配置中心节点
+create /example/batchapp/config
+# 创建系统的batchapp工程版本节点
+create /example/batchapp/version
+# 创建batchapp的版本主机节点
+create /example/batchapp/version/global 1.1.0-SNAPSHOT
+# 创建batchapp的心跳配置节点
+create /example/batchapp/heartbeat

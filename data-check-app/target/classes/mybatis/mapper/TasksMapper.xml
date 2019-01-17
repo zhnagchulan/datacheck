@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+   <mapper namespace="com.chinalife.datacheck.dao.TasksDao">
+       <!--  添加纪录到tb_tasks表-->
+       <insert id="add">
+       insert into tb_tasks(
+                checkRule_code,
+        	    create_time,
+        		start_time,
+        		end_time,
+        		next_time,
+        		fail_reason
+       ) values (
+        		#{checkRule_code},
+        	    #{create_time},
+        		#{start_time},
+        		#{end_time},
+        		#{next_time},
+        		#{fail_reason}
+       )
+       </insert>
+      <!--根据校验规则插叙该校验规则下的所有执行-->
+       <select id="queryByCheckRuleCode" resultType="Tasks">
+       select  task_id,
+       			checkRule_code,
+        	    create_time,
+        		start_time,
+        		end_time,
+        		next_time,
+        		task_status,
+        		fail_reason
+       from tb_tasks
+       where  checkRule_code=#{checkRule_code}		
+       </select>
+       <!-- 根据任务id更新记录-->
+       <update id="update">
+       update tb_tasks 
+       <set>    
+      <if test="start_time!=null">start_time=#{start_time},</if>
+      <if test="end_time!=null"> end_time=#{end_time},</if> 
+     <if test="next_time!=null">next_time=#{next_time},</if>
+     <if test="task_status!=null">task_status=#{task_status},</if>
+     <if test="fail_reason!=null">fail_reason=#{fail_reason}</if>
+       </set>
+       where checkRule_code=#{checkRule_code} and create_time=#{create_time}
+       </update>
+       
+       <!-- 根据任务id删除任务 -->
+       <delete id="delete">
+       delete from tb_tasks where task_id=#{task_id}
+       </delete>
+       <!-- 通过创建时间和校验规则代码查task_id -->
+       <select id="queryIdBytimeandRulecode" resultType="String">
+        select task_id from tb_tasks where <if test="create_time!=null">create_time=#{create_time} and</if> checkRule_code=#{checkRule_code}
+        for update
+       </select>
+       <!--供前台校验规则页面'下一次执行时间'使用，下一次执行时间=maxtime+intervals(间隔)-->
+       <select id="queryMaxNextTimeOfcheckRulecode" resultType="Timestamp">
+       select max(next_time) as maxNextTime from tb_tasks where checkRule_code=#{checkRule_code}
+       </select>
+        
+       
+       </mapper> 

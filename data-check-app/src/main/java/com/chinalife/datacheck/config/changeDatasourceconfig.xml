@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+		<typeAliases>
+	    <typeAlias alias="String" type="java.lang.String"/>
+		<typeAlias alias="Integer" type="java.lang.Integer" />
+		<typeAlias alias="Long" type="java.lang.Long" />
+		<typeAlias alias="HashMap" type="java.util.HashMap" />
+		<typeAlias alias="LinkedHashMap" type="java.util.LinkedHashMap" />
+		<typeAlias alias="ArrayList" type="java.util.ArrayList" />
+		<typeAlias alias="LinkedList" type="java.util.LinkedList" />
+		<typeAlias alias="User" type="com.chinalife.datacheck.models.User" />
+		<typeAlias alias="DataSource" type="com.chinalife.datacheck.models.DataSource" />
+<typeAlias alias="Timestamp" type="java.sql.Timestamp" />
+		<typeAlias alias="OrbpsLandQueue" type="com.chinalife.datacheck.models.OrbpsLandQueue" />
+		<typeAlias alias="Resource" type="com.chinalife.datacheck.models.Resource" />
+		<typeAlias alias="CheckResults" type="com.chinalife.datacheck.models.CheckResults"/>
+		<typeAlias alias="CheckRule" type="com.chinalife.datacheck.models.CheckRule"/>
+		<typeAlias alias="JobTemplete" type="com.chinalife.datacheck.models.JobTemplete"/>
+		<typeAlias alias="Party" type="com.chinalife.datacheck.models.Party"/>
+		<typeAlias alias="Stakeholder_to_checkRule" type="com.chinalife.datacheck.models.Stakeholder_to_checkRule"/>
+		<typeAlias alias="System_app" type="com.chinalife.datacheck.models.System_app"/>
+		<typeAlias alias="Tasks" type="com.chinalife.datacheck.models.Tasks"/>
+		<typeAlias alias="User" type="com.chinalife.datacheck.models.User"/>
+		<typeAlias alias="Stakeholder_to_checkRule" type="com.chinalife.datacheck.models.Stakeholder_to_checkRule"/>
+		
+	</typeAliases>
+	<!--数据库连接信息用于切换数据源功能使用，
+	不做日常数据库连接，日常数据库连接在application.xml中配置-->
+    <environments default="development">
+	  <environment id="development">
+            <transactionManager type="JDBC" />
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"  />
+                <property name="url" value="jdbc:mysql://10.21.34.192:10000/data-check?useUnicode=true&amp;useSSL=false&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true" />
+                <property name="username" value="datacheck" />
+                <property name="password" value="datacheck123" />
+            </dataSource>
+        </environment>
+        <environment id="changeDatasource">
+            <transactionManager type="JDBC" />
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"  />
+                <property name="url" value="${url}" />
+                <property name="username" value="${username}" />
+                <property name="password" value="${password}" />
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+       
+		<mapper resource="mybatis/mapper/CheckRulesMapper.xml"/>
+		<mapper resource="mybatis/mapper/CheckResultsMapper.xml"/>
+		<mapper resource="mybatis/mapper/Sql_statamentExcuting.xml"/>
+		<mapper resource="mybatis/mapper/TasksMapper.xml"/>
+		<mapper resource="mybatis/mapper/Stakeholder_to_checkRuleMapper.xml"/>
+
+    </mappers>
+</configuration>

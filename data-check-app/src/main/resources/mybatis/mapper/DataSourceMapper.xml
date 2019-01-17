@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinalife.datacheck.dao.DataSourceDao">
+
+    <select id="get" resultType="DataSource">
+        SELECT
+            ds.id   id,
+            ds.code code,
+            ds.dbInfo dbInfo,
+            ds.username username, 
+            ds.password password, 
+            ds.dbType dbType, 
+            sa.app_sname owner, 
+            ds.sid,
+            ds.port,
+            ds.createTime createTime,
+            ds.updateTime updateTime,
+            ds.delete_flag delete_flag
+        FROM
+            datasource ds LEFT JOIN
+            system_app sa
+        ON ds.app_id = sa.id
+        RIGHT JOIN user_app ua ON ds.app_id=ua.app_id
+        WHERE ds.delete_flag in('1','2') AND ua.user_id=#{id}
+        <if test="name != null">
+             AND (ds.code like concat('%',#{name},'%')
+             OR sa.app_name like concat('%',#{name},'%'))
+        </if>   
+        limit #{begin},#{end}      
+    </select>
+    <select id="total" resultType="String">
+        SELECT
+           count(*)
+        FROM
+            datasource ds LEFT JOIN
+            system_app sa
+        ON ds.app_id = sa.id
+        RIGHT JOIN user_app ua ON ds.app_id=ua.app_id
+        WHERE ds.delete_flag in('1','2') AND ua.user_id=#{id}
+        <if test="name != null">
+             AND (ds.code like concat('%',#{name},'%')
+             OR sa.app_name like concat('%',#{name},'%'))
+        </if>         
+    </select>
+    <select id="getApp" resultType="App">
+    	SELECT 
+    		sa.id,sa.app_name,sa.app_sname,sa.status
+    	FROM
+    		system_app sa 
+    	WHERE status = '1' 
+    	<if test="app_sname != null">
+    		AND sa.app_sname like concat('%',#{app_sname},'%')
+    	</if>
+    	<if test="user_id != null">
+    		AND sa.id in (select app_id from user_app where user_id = #{user_id})
+    	</if>
+    	order by sa.app_sname
+    </select>
+	<insert id="add"  useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO datasource
+        (code, dbInfo, username, password,dbType,createTime,updateTime,sid,port,delete_flag,app_id) VALUES
+            (#{code}, #{dbInfo}, #{userName}, #{password},#{dbType},current_timestamp,current_timestamp,#{sid},#{port},'1',#{owner})
+	</insert>
+    <select id="getappIDbySname" resultType="String">
+     select id from system_app where app_sname=#{app_sname}
+    </select>
+	<update id="delete">
+		UPDATE datasource
+        SET
+        delete_flag = '2',updateTime=current_timestamp 
+        WHERE id=#{id}
+	</update>
+    <update id="enable">
+		UPDATE datasource
+        SET
+        delete_flag = '1',updateTime=current_timestamp 
+        WHERE id=#{id}
+	</update>
+	<update id="update">
+		UPDATE datasource
+        SET
+       dbInfo=#{dbInfo},username=#{userName},sid=#{sid},password=#{password},port=#{port},dbType=#{dbType},updateTime=current_timestamp
+        WHERE id=#{id}
+	</update>
+	<update id="deleteUserApp">
+		delete from user_app
+		where user_id = #{user_id}
+	</update>
+	<insert id="addUserApp"  useGeneratedKeys="true">
+		INSERT INTO user_app
+        (user_id,app_id)
+        VALUES
+        (#{user_id},#{owner}) 
+	</insert>
+	
+	<select id="queryAll" resultType="DataSource">
+	select * from datasource 
+	</select>
+	
+</mapper>

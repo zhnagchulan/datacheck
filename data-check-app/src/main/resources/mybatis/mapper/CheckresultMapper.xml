@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinalife.datacheck.dao.CheckresultDao">
+
+	<resultMap id="checkresultMap" type="com.chinalife.datacheck.models.Checkresult" >
+ 		<result column="appname" property="appname" />
+        <result column="code" property="code" />
+        <result column="intent" property="intent"/>
+        <result column="starttime" property="starttime"/>
+        <result column="endtime" property="endtime"/>
+        <result column="reason" property="reason"/>
+        <result column="count" property="count"/>
+    </resultMap>
+<!--前台页面分页查询，每页用limit查询20条记录-->
+	    <select id="query" resultMap="checkresultMap">
+	       select 
+	       app.app_name appname,
+	task.checkRule_code code,
+	checkrule.intent intent,
+	DATE_FORMAT(task.start_time,'%Y-%m-%d %H:%i:%s') starttime,
+	DATE_FORMAT(task.end_time,'%Y-%m-%d %H:%i:%s') endtime,
+	task.fail_reason reason,
+	result.alert_sum count
+	from tb_tasks task left join  tb_checkrules checkrule
+	on task.checkRule_code = checkrule.checkRule_code
+	left join  tb_checkresults result
+	on task.task_id= result.task_id
+	left join system_app app on app.id = checkrule.app_id
+			<where>
+				task.start_time &gt;= #{starttime} and task.end_time &lt;= #{endtime}
+				<if test="appid != null and appid != ''">
+					and checkrule.app_id = #{appid}
+				</if>
+				<if test="code != null and code != ''">
+					and task.checkRule_code= #{code}
+				</if>
+			</where>  
+			limit #{begin},#{end}
+	   </select>
+  <!--为前台页面分页查询计算分页页数:分页页数=total/pageSize-->
+   <select id="total"  resultType="String">
+	      select  count(*)
+	from tb_tasks task left join  tb_checkrules checkrule
+	on task.checkRule_code = checkrule.checkRule_code
+	left join  tb_checkresults result
+	on task.task_id= result.task_id
+	left join system_app app on app.id = checkrule.app_id
+			<where>
+				task.start_time &gt;= #{starttime} and task.end_time &lt;= #{endtime}
+				<if test="appid != null and appid != ''">
+					and checkrule.app_id = #{appid}
+				</if>
+				<if test="code != null and code != ''">
+					and task.checkRule_code= #{code}
+				</if>
+			</where>   
+	   </select>
+
+
+	
+</mapper>

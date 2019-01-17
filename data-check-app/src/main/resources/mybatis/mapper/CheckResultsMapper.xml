@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+       <mapper namespace="com.chinalife.datacheck.dao.CheckResultsDao">
+       <!--添加-->
+       <insert id="add">
+       insert into tb_checkResults(task_id,alert_sum,alert_content,create_time)
+       values(#{task_id},#{alert_sum},#{alert_content},#{create_time})
+       </insert>
+      
+      <!--根据task_id删除校验结果 -->
+       <delete id="delete">
+       delete from tb_checkResults where task_id=#{task_id}
+       </delete>
+       <!-- 根据task_id查询校验结果 -->
+       <select id="query" resultType="CheckResults">
+       select serial_number,task_id,alert_sum,alert_content,create_time from tb_checkResults
+       where task_id=#{task_id}
+       </select>
+       
+       
+       </mapper>

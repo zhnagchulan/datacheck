@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinalife.datacheck.dao.UserDao">
+
+    <select id="countUser" resultType="Integer">
+        SELECT count(0)
+        FROM sys_user u
+        WHERE u.delete_status = '1'
+    </select>
+    <update id="deleteUserApp">
+		delete from user_app
+		where user_id = #{id}
+	</update>
+    <update id="enableUser">
+		UPDATE sys_user
+        SET
+        delete_status = '1',
+		update_time = current_timestamp
+        WHERE id = #{id}
+	</update>
+	<insert id="insertUserApp"  useGeneratedKeys="true">
+		INSERT INTO user_app
+        (user_id,app_id,create_time,update_time,delete_status)
+        VALUES
+        (#{id},#{app_id},current_timestamp,current_timestamp,'1') 
+	</insert>
+	<insert id="registryUser">
+		INSERT INTO sys_user
+        (id,username,pwd,mobile,email,role_id,create_time,update_time,delete_status,status)
+        VALUES
+        (#{id},#{username},#{pwd},#{mobile},#{email},'4',current_timestamp,current_timestamp,'1',1) 
+	</insert>
+	<select id="getUserApp" resultType="Integer">
+        SELECT ua.app_id id
+        FROM user_app ua,system_app sa
+        WHERE ua.app_id=sa.id and ua.user_id = #{id}
+    </select>
+    <insert id="addUser" useGeneratedKeys="true">
+        INSERT INTO sys_user
+        (id, username, pwd, mobile, email, role_id,create_time,update_time,delete_status,status) VALUES
+            (#{id},#{username},'e10adc3949ba59abbe56e057f20f883e',#{mobile},#{email},#{role},current_timestamp,current_timestamp,'1','1')
+    </insert>
+    <select id="getLists" resultType="User">
+        SELECT 
+		su.id id,
+		su.username username,
+		sr.role_name role,
+		su.mobile mobile,
+		su.status status,
+		su.email email,
+        su.delete_status delete_status
+        FROM sys_user su left join sys_role sr
+        ON su.role_id = sr.id 
+        WHERE su.delete_status in ('1')
+        <if test="username != null">
+        	AND su.username like concat(#{username},'%')
+        </if>
+        <if test="id != null">
+        	AND su.id like concat(#{id},'%')
+        </if>
+        <if test="status != null">
+        	AND su.status = #{status}
+        </if>
+        <if test="role != 1">
+        	AND su.id in (select user_id from user_app where app_id in
+        	(select app_id from user_app where user_id = #{userid}) and user_id != #{userid}) 
+        </if>
+        <if test="role == 1">
+            AND su.id != #{userid}
+        </if>
+        limit #{begin},#{end}
+    </select>
+    <select id="total" resultType="String">
+        SELECT 
+		count(*)
+         FROM sys_user su left join sys_role sr
+        ON su.role_id = sr.id
+        WHERE su.delete_status in ('1')
+        <if test="username != null">
+        	AND su.username like concat(#{username},'%')
+        </if>
+        <if test="id != null">
+        	AND su.id like concat(#{id},'%')
+        </if>
+        <if test="status != null">
+        	AND su.status = #{status}
+        </if>
+        <if test="role != 1">
+        	AND su.id in (select user_id from user_app where app_id in
+        	(select app_id from user_app where user_id = #{userid}) and user_id != #{userid}) 
+        </if>
+        <if test="role == 1">
+            AND su.id != #{userid}
+        </if>
+    </select>
+	<select id="getUser" resultType="User">
+        SELECT 
+		u.id id,
+		u.username username,
+		u.pwd pwd,
+		u.mobile mobile,
+		u.email email,
+		u.role_id role,
+		u.status status
+        FROM sys_user u
+        WHERE u.id = #{id}
+    </select>
+    
+    <update id="updateUser">
+        UPDATE sys_user
+        SET
+        username = #{username},
+        pwd = #{pwd},
+		mobile = #{mobile},
+		email = #{email},
+		update_time = current_timestamp
+        WHERE id = #{id}
+    </update>
+	<update id="updateUsers">
+        UPDATE sys_user
+        SET
+        username = #{username},
+		mobile = #{mobile},
+		email = #{email},
+		role_id = (select id from sys_role where role_name =#{role}),
+		status = #{status},
+		update_time = current_timestamp
+        WHERE id = #{id}
+    </update>
+    <update id="deleteUser">
+        UPDATE sys_user
+        SET
+        delete_status = '0',
+		update_time = current_timestamp
+        WHERE id = #{id}
+    </update>
+    <insert id="insertRole" useGeneratedKeys="true" keyProperty="roleId">
+        INSERT INTO sys_role
+        (role_name)
+        VALUES (#{roleName})
+    </insert>
+
+    <insert id="insertRolePermission">
+        insert into sys_role_permission (role_id, permission_id)
+        values
+        <foreach collection="permissions" item="item" index="index" separator=",">
+            (#{roleId}, #{item})
+        </foreach>
+    </insert>
+
+    <update id="removeRole">
+        UPDATE sys_role
+        SET
+            delete_status = '2'
+        WHERE id = #{roleId}
+    </update>
+    <update id="removeRoleAllPermission">
+        UPDATE sys_role_permission
+        SET
+            delete_status = '2'
+        WHERE role_id = #{roleId}
+    </update>
+
+    <update id="removeOldPermission">
+        UPDATE sys_role_permission
+        SET
+        delete_status = '2'
+        WHERE role_id = #{roleId}
+        AND permission_id in (
+        <foreach collection="permissions" item="item" index="index" separator=",">
+            #{item}
+        </foreach>
+        )
+    </update>
+    <update id="updateRoleName">
+        UPDATE sys_role
+        SET
+            role_name = #{roleName}
+        WHERE id = #{roleId}
+    </update>
+    <select id="queryExistUsername" resultType="int">
+        select count(0)
+         from sys_user
+         WHERE username=#{username}
+         AND delete_status='1';
+    </select>
+</mapper>

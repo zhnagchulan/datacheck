@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+ <mapper namespace="com.chinalife.datacheck.dao.Stakeholder_to_checkRuleDao">
+   <!-- 添加校验规则与关系人对应记录 -->
+   <insert id="add">
+   <!-- String workNumber,String checkRule_code,Timestamp create_time,Timestamp update_time -->
+     insert into tb_stakeholder_to_checkRule(workNumber,checkRule_code,create_time)
+      values(#{workNumber},#{checkRule_code},#{create_time})
+  </insert>
+ <!-- 删除一条校验规则下的所有关系人-->
+  <delete id="delete">
+      delete from tb_stakeholder_to_checkRule where checkRule_code=#{checkRule_code} 
+      <if test="workNumber !=null">and workNumber=#{workNumber}</if>
+  </delete>
+  <!--通过校验规则代码和关系人工号更新记录-->
+  <update id="update">
+  update tb_stakeholder_to_checkRule set update_time=#{update_time} 
+  where checkRule_code=#{checkRule_code} and workNumber=#{workNumber}
+  </update>
+  <!-- 查询一条校验规则下的所有记录 -->
+  <select id="query" resultType="Stakeholder_to_checkRule">
+  select id id,
+  		workNumber workNumber,
+  		checkRule_code checkRule_code,
+  		create_time create_time,
+  		update_time update_time
+   from tb_stakeholder_to_checkRule 
+   where checkRule_code=#{checkRule_code}
+  </select>
+  <!-- 通过checkRule_code查关系人的工号 -->
+  <select id="queryWorknumbersBycheckRule_code" resultType="String">
+   select workNumber from  tb_stakeholder_to_checkRule where checkRule_code=#{checkRule_code}
+  </select>
+  
+  <!-- 通过关系人工号查询关系人一条记录 -->
+  <select id="getWorkerInfo" resultType="HashMap">
+    select workNumber,branch_name,workerName,workerPhoNum,workerEmail,is_enable
+    from tb_stakeholders_management where workNumber=#{workNumber}
+  </select>
+  <!-- 通过名字查工号 -->
+  <select id="getworkNumberByName" resultType="String">
+  select workNumber from tb_stakeholders_management where workerName=#{workerName}
+  </select>
+  
+ </mapper>

@@ -1,0 +1,11 @@
+{
+  "hints": [],
+  "groups": [],
+  "properties": [
+    {
+      "name": "spring.jpa.hibernate.naming-strategy",
+      "description": "A description for 'spring.jpa.hibernate.naming-strategy'",
+      "type": "java.lang.String"
+    }
+  ]
+}

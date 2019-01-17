@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinalife.datacheck.dao.PartyDao">
+
+    <select id="getParty" resultType="Party">
+        SELECT
+            u.workNumber,
+            u.branch_name,
+            u.workerName,
+            u.workerPhoNum,
+            u.workerEmail
+        FROM
+            tb_stakeholders_management u
+        <where> 
+         <if test="workNumber != null and workNumber != '' "> 
+            u.workNumber = #{workNumber}
+         </if>  
+         <if test="branch_name != null and branch_name != '' "> 
+              AND u.branch_name = #{branch_name}
+         </if>  
+         <if test="workerName != null and workerName != '' "> 
+              AND u.workerName=#{workerName}
+          </if>    
+          <if test="workerPhoNum != null and workerPhoNum != '' ">  
+              AND u.workerPhoNum=#{workerPhoNum}
+           </if>   
+           <if test="workerEmail != null and workerEmail != '' ">    
+              AND u.workerEmail=#{workerEmail}
+            </if>   
+           </where> 
+             limit #{begin},#{end}
+    </select>
+     <select id="total" resultType="String">
+        SELECT
+          count(*)
+        FROM
+            tb_stakeholders_management u
+        <where> 
+         <if test="workNumber != null and workNumber != '' "> 
+            u.workNumber = #{workNumber}
+         </if>  
+         <if test="branch_name != null and branch_name != '' "> 
+              AND u.branch_name = #{branch_name}
+         </if>  
+         <if test="workerName != null and workerName != '' "> 
+              AND u.workerName=#{workerName}
+          </if>    
+          <if test="workerPhoNum != null and workerPhoNum != '' ">  
+              AND u.workerPhoNum=#{workerPhoNum}
+           </if>   
+           <if test="workerEmail != null and workerEmail != '' ">    
+              AND u.workerEmail=#{workerEmail}
+            </if>   
+           </where>  
+    </select>
+    
+      <insert id="add" useGeneratedKeys="true" parameterType="party">
+        insert into  
+        tb_stakeholders_management 
+           (
+           workNumber,
+            branch_name,
+            workerName,
+            workerPhoNum,
+            workerEmail,
+            create_time
+            )
+            values
+            (
+            #{workNumber},
+            #{branch_name},
+            #{workerName},
+            #{workerPhoNum},  
+            #{workerEmail},
+            NOW()
+            )
+    </insert>
+    
+    <update id="update">
+        UPDATE tb_stakeholders_management
+        SET workerPhoNum = #{workerPhoNum},workerEmail = #{workerEmail},update_time= NOW()
+        WHERE workNumber = #{workNumber}
+    </update>
+    
+    <delete id="delete">
+        delete from tb_stakeholders_management
+        WHERE workNumber = #{workNumber}
+    </delete>
+    
+    <delete id="batchremove">
+        delete from tb_stakeholders_management
+        WHERE workNumber =#{workNumbers}
+    </delete>
+    
+	<select id="count" resultType="Party">
+        SELECT
+            u.workNumber,
+            u.branch_name,
+            u.workerName,
+            u.workerPhoNum,
+            u.workerEmail
+        FROM
+            tb_stakeholders_management u
+    </select>
+
+    <resultMap id="partyMap" type="com.chinalife.datacheck.models.Party">
+        <result column="workNumber" property="workNumber"/>
+        <result column="branch_name" property="branch_name"/>
+        <result column="workerName" property="workerName"/>
+        <result column="workerPhoNum" property="workerPhoNum"/>
+        <result column="workerEmail" property="workerEmail"/>
+        <collection property="permissionList" ofType="String">
+            <id column="permissionName" property="permissionName"/>
+        </collection>
+    </resultMap>
+    
+    <select id="listParty" resultMap="partyMap">
+        SELECT 
+        u.*,
+        r.role_name roleName,
+        CONCAT(p.resource_name,p.permission_name) permissionName
+        FROM (SELECT
+                     id                                      userId,
+                     username                                username,
+                     nickname                                nickname,
+                     role_id                                 roleId,
+                     delete_status                           deleteStatus,
+                     DATE_FORMAT(create_time, '%Y.%m.%d %T') createTime,
+                     DATE_FORMAT(update_time, '%Y.%m.%d %T') updateTime
+                 FROM sys_user
+                 WHERE delete_status = '1'
+                 ORDER BY id
+                LIMIT #{offSet}, #{pageRow}
+             ) u
+            LEFT JOIN sys_role r ON r.id = u.roleId
+            LEFT JOIN sys_role_permission rp ON rp.role_id = r.id
+            LEFT JOIN sys_permission p ON p.resource_id = rp.permission_id
+        ORDER BY u.userId
+    </select>
+
+    <resultMap id="roleMap" type="com.chinalife.datacheck.models.Party">
+        <id column="roleId" property="roleId"/>
+        <result column="roleName" property="roleName"/>
+        <collection property="users" ofType="com.alibaba.fastjson.JSONObject">
+            <id column="userId" property="userId"/>
+            <result column="nickname" property="nickname"/>
+        </collection>
+        <collection property="menus" ofType="com.chinalife.datacheck.models.Party">
+            <id column="menuCode" property="menuCode"/>
+            <result column="menuName" property="menuName"/>
+            <collection property="permissions" ofType="com.alibaba.fastjson.JSONObject">
+                <id column="permissionId" property="permissionId"/>
+                <result column="permissionName" property="permissionName"/>
+            </collection>
+        </collection>
+    </resultMap>
+    
+    <update id="removeRole">
+        UPDATE sys_role
+        SET
+            delete_status = '2'
+        WHERE id = #{roleId}
+    </update>
+
+    <update id="removeOldPermission">
+        UPDATE sys_role_permission
+        SET
+        delete_status = '2'
+        WHERE role_id = #{roleId}
+        AND permission_id in (
+        <foreach collection="permissions" item="item" index="index" separator=",">
+            #{item}
+        </foreach>
+        )
+    </update>
+
+</mapper>

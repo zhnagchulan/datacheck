@@ -1,0 +1,97 @@
+[[[2018-05-04 09:14:45.332 | DESKTOP-FTGKQ5T | example-webapp | %PARSER_ERROR[tcode] | ERROR | %PARSER_ERROR[path] | org.springframework.boot.SpringApplication | %PARSER_ERROR[act] | Application run failed java.lang.IllegalStateException: java.lang.IllegalStateException: Logback configuration error detected: 
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@42e65329 - Failed to instantiate converter class [com.halo.core.log.converter.TcodeConverter] for keyword [tcode] ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type com.halo.core.log.converter.TcodeConverter
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@42e65329 - [tcode] is not a valid conversion word
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@42e65329 - Failed to instantiate converter class [com.halo.core.log.converter.PathConverter] for keyword [path] ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type com.halo.core.log.converter.PathConverter
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@42e65329 - [path] is not a valid conversion word
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@42e65329 - Failed to instantiate converter class [com.halo.core.log.converter.ActConverter] for keyword [act] ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type com.halo.core.log.converter.ActConverter
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@42e65329 - [act] is not a valid conversion word
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@668cba46 - Failed to instantiate converter class [com.halo.core.log.converter.TcodeConverter] for keyword [tcode] ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type com.halo.core.log.converter.TcodeConverter
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@668cba46 - [tcode] is not a valid conversion word
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@668cba46 - Failed to instantiate converter class [com.halo.core.log.converter.PathConverter] for keyword [path] ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type com.halo.core.log.converter.PathConverter
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@668cba46 - [path] is not a valid conversion word
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@668cba46 - Failed to instantiate converter class [com.halo.core.log.converter.ActConverter] for keyword [act] ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type com.halo.core.log.converter.ActConverter
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@668cba46 - [act] is not a valid conversion word
+ERROR in ch.qos.logback.core.joran.action.AppenderAction - Could not create an Appender of type [com.halo.core.log.appender.KafkaAppender]. ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type com.halo.core.log.appender.KafkaAppender
+ERROR in ch.qos.logback.core.joran.spi.Interpreter@78:91 - ActionException in Action for tag [appender] ch.qos.logback.core.joran.spi.ActionException: ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type com.halo.core.log.appender.KafkaAppender
+ERROR in ch.qos.logback.core.joran.action.AppenderRefAction - Could not find an appender named [FULL_KAFKA_OUT_SYNC]. Did you define it below instead of above in the configuration file?
+ERROR in ch.qos.logback.core.joran.action.AppenderRefAction - See http://logback.qos.ch/codes.html#appender_order for more details.
+ERROR in ch.qos.logback.classic.AsyncAppender[FULL_KAFKA_OUT_ASYNC] - No attached appenders found.
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@72577ab0 - Failed to instantiate converter class [com.halo.core.log.converter.TcodeConverter] for keyword [tcode] ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type com.halo.core.log.converter.TcodeConverter
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@72577ab0 - [tcode] is not a valid conversion word
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@72577ab0 - Failed to instantiate converter class [com.halo.core.log.converter.PathConverter] for keyword [path] ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type com.halo.core.log.converter.PathConverter
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@72577ab0 - [path] is not a valid conversion word
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@72577ab0 - Failed to instantiate converter class [com.halo.core.log.converter.ActConverter] for keyword [act] ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type com.halo.core.log.converter.ActConverter
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@72577ab0 - [act] is not a valid conversion word
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@5fd9cca0 - Failed to instantiate converter class [com.halo.core.log.converter.TcodeConverter] for keyword [tcode] ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type com.halo.core.log.converter.TcodeConverter
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@5fd9cca0 - [tcode] is not a valid conversion word
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@5fd9cca0 - Failed to instantiate converter class [com.halo.core.log.converter.PathConverter] for keyword [path] ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type com.halo.core.log.converter.PathConverter
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@5fd9cca0 - [path] is not a valid conversion word
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@5fd9cca0 - Failed to instantiate converter class [com.halo.core.log.converter.ActConverter] for keyword [act] ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type com.halo.core.log.converter.ActConverter
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@5fd9cca0 - [act] is not a valid conversion word
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@2fd6b369 - Failed to instantiate converter class [com.halo.core.log.converter.TcodeConverter] for keyword [tcode] ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type com.halo.core.log.converter.TcodeConverter
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@2fd6b369 - [tcode] is not a valid conversion word
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@2fd6b369 - Failed to instantiate converter class [com.halo.core.log.converter.PathConverter] for keyword [path] ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type com.halo.core.log.converter.PathConverter
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@2fd6b369 - [path] is not a valid conversion word
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@2fd6b369 - Failed to instantiate converter class [com.halo.core.log.converter.ActConverter] for keyword [act] ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type com.halo.core.log.converter.ActConverter
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@2fd6b369 - [act] is not a valid conversion word
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initializeSystem(LoggingApplicationListener.java:276)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initialize(LoggingApplicationListener.java:237)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEnvironmentPreparedEvent(LoggingApplicationListener.java:200)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEvent(LoggingApplicationListener.java:173)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:172)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:165)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:139)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:127)
+	at org.springframework.boot.context.event.EventPublishingRunListener.environmentPrepared(EventPublishingRunListener.java:74)
+	at org.springframework.boot.SpringApplicationRunListeners.environmentPrepared(SpringApplicationRunListeners.java:54)
+	at org.springframework.boot.SpringApplication.prepareEnvironment(SpringApplication.java:358)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:317)
+	at com.chinalife.datacheck.Application.main(Application.java:18)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49)
+Caused by: java.lang.IllegalStateException: Logback configuration error detected: 
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@42e65329 - Failed to instantiate converter class [com.halo.core.log.converter.TcodeConverter] for keyword [tcode] ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type com.halo.core.log.converter.TcodeConverter
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@42e65329 - [tcode] is not a valid conversion word
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@42e65329 - Failed to instantiate converter class [com.halo.core.log.converter.PathConverter] for keyword [path] ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type com.halo.core.log.converter.PathConverter
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@42e65329 - [path] is not a valid conversion word
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@42e65329 - Failed to instantiate converter class [com.halo.core.log.converter.ActConverter] for keyword [act] ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type com.halo.core.log.converter.ActConverter
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@42e65329 - [act] is not a valid conversion word
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@668cba46 - Failed to instantiate converter class [com.halo.core.log.converter.TcodeConverter] for keyword [tcode] ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type com.halo.core.log.converter.TcodeConverter
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@668cba46 - [tcode] is not a valid conversion word
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@668cba46 - Failed to instantiate converter class [com.halo.core.log.converter.PathConverter] for keyword [path] ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type com.halo.core.log.converter.PathConverter
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@668cba46 - [path] is not a valid conversion word
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@668cba46 - Failed to instantiate converter class [com.halo.core.log.converter.ActConverter] for keyword [act] ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type com.halo.core.log.converter.ActConverter
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@668cba46 - [act] is not a valid conversion word
+ERROR in ch.qos.logback.core.joran.action.AppenderAction - Could not create an Appender of type [com.halo.core.log.appender.KafkaAppender]. ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type com.halo.core.log.appender.KafkaAppender
+ERROR in ch.qos.logback.core.joran.spi.Interpreter@78:91 - ActionException in Action for tag [appender] ch.qos.logback.core.joran.spi.ActionException: ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type com.halo.core.log.appender.KafkaAppender
+ERROR in ch.qos.logback.core.joran.action.AppenderRefAction - Could not find an appender named [FULL_KAFKA_OUT_SYNC]. Did you define it below instead of above in the configuration file?
+ERROR in ch.qos.logback.core.joran.action.AppenderRefAction - See http://logback.qos.ch/codes.html#appender_order for more details.
+ERROR in ch.qos.logback.classic.AsyncAppender[FULL_KAFKA_OUT_ASYNC] - No attached appenders found.
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@72577ab0 - Failed to instantiate converter class [com.halo.core.log.converter.TcodeConverter] for keyword [tcode] ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type com.halo.core.log.converter.TcodeConverter
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@72577ab0 - [tcode] is not a valid conversion word
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@72577ab0 - Failed to instantiate converter class [com.halo.core.log.converter.PathConverter] for keyword [path] ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type com.halo.core.log.converter.PathConverter
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@72577ab0 - [path] is not a valid conversion word
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@72577ab0 - Failed to instantiate converter class [com.halo.core.log.converter.ActConverter] for keyword [act] ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type com.halo.core.log.converter.ActConverter
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@72577ab0 - [act] is not a valid conversion word
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@5fd9cca0 - Failed to instantiate converter class [com.halo.core.log.converter.TcodeConverter] for keyword [tcode] ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type com.halo.core.log.converter.TcodeConverter
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@5fd9cca0 - [tcode] is not a valid conversion word
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@5fd9cca0 - Failed to instantiate converter class [com.halo.core.log.converter.PathConverter] for keyword [path] ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type com.halo.core.log.converter.PathConverter
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@5fd9cca0 - [path] is not a valid conversion word
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@5fd9cca0 - Failed to instantiate converter class [com.halo.core.log.converter.ActConverter] for keyword [act] ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type com.halo.core.log.converter.ActConverter
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@5fd9cca0 - [act] is not a valid conversion word
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@2fd6b369 - Failed to instantiate converter class [com.halo.core.log.converter.TcodeConverter] for keyword [tcode] ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type com.halo.core.log.converter.TcodeConverter
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@2fd6b369 - [tcode] is not a valid conversion word
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@2fd6b369 - Failed to instantiate converter class [com.halo.core.log.converter.PathConverter] for keyword [path] ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type com.halo.core.log.converter.PathConverter
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@2fd6b369 - [path] is not a valid conversion word
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@2fd6b369 - Failed to instantiate converter class [com.halo.core.log.converter.ActConverter] for keyword [act] ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type com.halo.core.log.converter.ActConverter
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@2fd6b369 - [act] is not a valid conversion word
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.loadConfiguration(LogbackLoggingSystem.java:166)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initializeWithSpecificConfig(AbstractLoggingSystem.java:67)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initialize(AbstractLoggingSystem.java:57)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.initialize(LogbackLoggingSystem.java:114)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initializeSystem(LoggingApplicationListener.java:269)
+	... 17 common frames omitted
+]]]
